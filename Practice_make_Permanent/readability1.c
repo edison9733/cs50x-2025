@@ -20,7 +20,7 @@ int main(void)
     int sentences = count_sentences(text);
 
     // Calculate the Coleman-Liau index
-    
+    float L = (float)
 }
 
 int count_letters(string text)
