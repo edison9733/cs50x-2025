@@ -73,11 +73,11 @@ int compute_score(string word)
     {
         if (isupper(word[i]))
         {
-            score += POINTS[word[i] - 'A'];
+            score += POINTS[word[i] - 'A']; // Convert uppercase letter to index
         }
         else if (islower(word[i]))
         {
-            score += POINTS[word[i] - 'a'];
+            score += POINTS[word[i] - 'a']; // Convert lowercase letter to index
         }
     }
     return score;
