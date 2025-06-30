@@ -40,7 +40,13 @@ int main(void)
 
 int count_letters(string text)
 {
-    
+    // initialize letter count
+    int count = 0
+    // Looping
+    for (int i = 0, n = strlen(text); i < n; i++)
+    {
+        if (isalpha(text[i]))
+    }
 }
 
 int count_words(string text)
