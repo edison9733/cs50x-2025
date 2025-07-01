@@ -9,3 +9,7 @@ How do you know?: TODO
 sort3 uses: TODO
 
 How do you know?: TODO
+
+
+
+in order sort ( bubble sort is faster than selection sort ): TODO
