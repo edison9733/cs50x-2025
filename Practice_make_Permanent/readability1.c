@@ -45,16 +45,50 @@ int count_letters(string text)
     // Looping
     for (int i = 0, n = strlen(text); i < n; i++)
     {
-        if (isalpha(text[i]))
+        if (isupper(text[i[) || islower(text[i]))
+        {
+            count++;
+        }
+    return count;
     }
 }
 
 int count_words(string text)
 {
+    int count = 0;
+    bool in_word = false;
 
+    for (int i = 0, n = strlen(text); i < n ; i++)
+    {
+        if (isspace(text[i]) || ispunct(text[i]))
+        {
+            if (in_word)
+            {
+                count++;
+                in_word = false;
+            }
+        }
+        else
+        {
+            in_word = true;
+        }
+    if (in_word)
+    {
+        count++;
+    }
+    return count;
 }
 
 int count_sentences(string text)
 {
+    int count = 0;
 
+    for (int i = 0, n = strlen(text); i < n; i++)
+    {
+        if (text[i] == '.' || text[i] == '!' || text[i] == '?')
+        {
+            count++;
+        }
+    }
+    return count;
 }

@@ -43,7 +43,7 @@ int count_letters(string text)
     int count = 0;
     for (int i = 0, n = strlen(text); i < n; i++)
     {
-        if (isalpha(text[i])) // Check if the character is a letter
+        if (isalpha(text[i]) || islower(text[i])) // Check if the character is a letter
         {
             count++;
         }
@@ -79,7 +79,7 @@ int count_words(string text)
     }
 
     return count;
-}
+}       
 
 int count_sentences(string text)
 {

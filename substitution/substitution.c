@@ -45,15 +45,15 @@ int main(int argc, string argv[])
         char c = plaintext[i];
         if (isupper(c))
         {
-            printf("%c", toupper(key[c - 'A']));
+            printf("%c", toupper(key[c - 'A'])); // 'A' is subtracted to convert to index 0-25
         }
         else if (islower(c))
         {
-            printf("%c", tolower(key[c - 'a']));
+            printf("%c", tolower(key[c - 'a'])); // 'a' is subtracted to convert to index 0-25
         }
         else
         {
-            printf("%c", c);
+            printf("%c", c); // Non-alphabetic characters remain unchanged
         }
     }
 
