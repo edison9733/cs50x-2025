@@ -1,30 +1,47 @@
-card_number = input("Number: ")  # Keep as string to handle leading zeros
-if not card_number.isdigit():
-    print("INVALID")
-    exit()
+text = input("Enter text: ")
 
-sum = 0
-digit_count = len(card_number)
+import re
+def readability_score(text):
+    # Remove punctuation and split into words
+    words = re.findall(r'\b\w+\b', text)
+    num_words = len(words)
 
-# Luhn's Algorithm
-for i in range(digit_count):
-    digit = int(card_number[digit_count - 1 - i])
-    if i % 2 == 1:  # Every second digit from the end
-        digit *= 2
-        if digit > 9:
-            digit = digit // 10 + digit % 10  # Sum digits of products > 9
-    sum += digit
+    # Count sentences by looking for end punctuation
+    sentences = re.split(r'[.!?]+', text)
+    num_sentences = len([s for s in sentences if s.strip()])  # Filter out empty strings
 
-# Check card type and validity
-first_two = int(card_number[:2])
-if (sum % 10 == 0):
-    if (digit_count == 15 and first_two in [34, 37]):
-        print("AMEX")
-    elif (digit_count == 16 and first_two in range(51, 56)):
-        print("MASTERCARD")
-    elif ((digit_count == 13 or digit_count == 16) and card_number[0] == '4'):
-        print("VISA")
-    else:
-        print("INVALID")
-else:
-    print("INVALID")
+    # Count syllables in each word
+    def count_syllables(word):
+        word = word.lower()
+        syllable_count = 0
+        vowels = "aeiouy"
+        if word[0] in vowels:
+            syllable_count += 1
+        for i in range(1, len(word)):
+            if word[i] in vowels and word[i-1] not in vowels:
+                syllable_count += 1
+        if word.endswith("e"):
+            syllable_count -= 1
+        if syllable_count == 0:
+            syllable_count = 1
+        return syllable_count
+
+    num_syllables = sum(count_syllables(word) for word in words)
+
+    # Calculate the Flesch Reading Ease score
+    if num_sentences == 0 or num_words == 0:
+        return "Insufficient data to calculate readability score."
+
+    score = 206.835 - (1.015 * (num_words / num_sentences)) - (84.6 * (num_syllables / num_words))
+
+    return f"Readability Score: {score:.2f}"
+print(readability_score(text))
+# Example usage
+# text = "This is an example sentence. It has several words and some punctuation!"
+# print(readability_score(text))
+# Example usage
+# text = "This is an example sentence. It has several words and some punctuation!"
+# print(readability_score(text))
+# Example usage
+# text = "This is an example sentence. It has several words and some punctuation!"
+
