@@ -11,8 +11,10 @@ sentences = count_sentences(text)
 
 def count_letters(text):
     count = 0
-    for i is less than in len(text):
-        count += 1
+    for char in range(text):
+        if char.isalpha():
+            count += 1
+    return count
 
-print("{letters}")
+print({letters})
 
