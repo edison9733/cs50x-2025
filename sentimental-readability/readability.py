@@ -16,5 +16,5 @@ def count_letters(text):
             count += 1
     return count
 
-print({letters})
+print({count_letters(text)}, letters)
 
