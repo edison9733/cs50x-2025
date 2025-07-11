@@ -15,7 +15,7 @@ chat_completion = client.chat.completions.create(
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt}
     ],
-    model="gpt-4.0",
+    model="gpt-4",
 )
 
 response_text = chat_completion.choices[0].message.content
