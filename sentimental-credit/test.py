@@ -1,47 +1,90 @@
-text = input("Enter text: ")
+import csv
+import sys
 
-import re
-def readability_score(text):
-    # Remove punctuation and split into words
-    words = re.findall(r'\b\w+\b', text)
-    num_words = len(words)
 
-    # Count sentences by looking for end punctuation
-    sentences = re.split(r'[.!?]+', text)
-    num_sentences = len([s for s in sentences if s.strip()])  # Filter out empty strings
+def main():
 
-    # Count syllables in each word
-    def count_syllables(word):
-        word = word.lower()
-        syllable_count = 0
-        vowels = "aeiouy"
-        if word[0] in vowels:
-            syllable_count += 1
-        for i in range(1, len(word)):
-            if word[i] in vowels and word[i-1] not in vowels:
-                syllable_count += 1
-        if word.endswith("e"):
-            syllable_count -= 1
-        if syllable_count == 0:
-            syllable_count = 1
-        return syllable_count
+    # TODO: Check for command-line usage
+    // if len(sys.argv) != 3:
+    if len(sys.argv) != 3:
+        print("Usage: python dna.py data.csv sequence.txt")
+        sys.exit(1)
 
-    num_syllables = sum(count_syllables(word) for word in words)
+    # TODO: Read database file into a variable
+    database_file = sys.argv[1]
+    sequence_file = sys.argv[2]
+    database = []
+    with open(database_file, 'r') as db_file:
+        reader = csv.DictReader(db_file)
+        for row in reader:
+            database.append(row)
 
-    # Calculate the Flesch Reading Ease score
-    if num_sentences == 0 or num_words == 0:
-        return "Insufficient data to calculate readability score."
+    # TODO: Read DNA sequence file into a variable
+    with open(sequence_file, 'r') as seq_file:
+        sequence = seq_file.read().strip()
 
-    score = 206.835 - (1.015 * (num_words / num_sentences)) - (84.6 * (num_syllables / num_words))
+    # TODO: Find longest match of each STR in DNA sequence
+    str_counts = {}
+    for str_name in database[0].keys():
+        if str_name != 'name':
+            str_counts[str_name] = longest_match(sequence, str_name)
 
-    return f"Readability Score: {score:.2f}"
-print(readability_score(text))
-# Example usage
-# text = "This is an example sentence. It has several words and some punctuation!"
-# print(readability_score(text))
-# Example usage
-# text = "This is an example sentence. It has several words and some punctuation!"
-# print(readability_score(text))
-# Example usage
-# text = "This is an example sentence. It has several words and some punctuation!"
+    # TODO: Check database for matching profiles
+    for person in database:
+        match = True
+        for str_name in str_counts:
+            if int(person[str_name]) != str_counts[str_name]:
+                match = False
+                break
+        if match:
+            print(person['name'])
+            return
+    # If no match found, print "No match"
+    print("No match")
+    sys.exit(0)
+    # If incorrect command-line usage, print usage message and exit
+    # if len(sys.argv) != 3:
+    #     print("Usage: python dna.py data.csv sequence.txt")
 
+    return
+
+
+def longest_match(sequence, subsequence):
+    """Returns length of longest run of subsequence in sequence."""
+
+    # Initialize variables
+    longest_run = 0
+    subsequence_length = len(subsequence)
+    sequence_length = len(sequence)
+
+    # Check each character in sequence for most consecutive runs of subsequence
+    for i in range(sequence_length):
+
+        # Initialize count of consecutive runs
+        count = 0
+
+        # Check for a subsequence match in a "substring" (a subset of characters) within sequence
+        # If a match, move substring to next potential match in sequence
+        # Continue moving substring and checking for matches until out of consecutive matches
+        while True:
+
+            # Adjust substring start and end
+            start = i + count * subsequence_length
+            end = start + subsequence_length
+
+            # If there is a match in the substring
+            if sequence[start:end] == subsequence:
+                count += 1
+
+            # If there is no match in the substring
+            else:
+                break
+
+        # Update most consecutive matches found
+        longest_run = max(longest_run, count)
+
+    # After checking for runs at each character in seqeuence, return longest run found
+    return longest_run
+
+
+main()
