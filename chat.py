@@ -6,7 +6,7 @@ from openai import OpenAI  # Fixed import
 load_dotenv()
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ["API_KEY"])
 
 # System prompt
 system_prompt = "You are a helpful assistant. Please answer the user's questions to the best of your ability."
