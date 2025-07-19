@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // When answer1 is correct, the button will turn green
+                let correct = document.querySelector('.correct');
+                correct.addEventListener('click', function() {
+                    correct.style.backgroundColor = "green";
+                    document.querySelector('#answer1').innerHTML = "Correct!";
+                });
+
+                // When answer1 is incorrect, the button will turn red
+                let incorrect = document.querySelectorAll('.incorrect');
+                for (let i = 0; i < incorrect.length; i++) {
+                    incorrect[i].addEventListener('click', function() {
+                        incorrect[i].style.backgroundColor = "red";
+                        document.querySelector('#answer1').innerHTML = "Incorrect, Fake Malaysian!";
+                    });
+                }
+
+                // Check answer 2
+                document.querySelector("#check").addEventListener("click", function() {
+                    let inputElement = document.querySelector("input");
+                    let input = inputElement.value;
+                    if (input.toLowerCase() === "米粉") {
+                        inputElement.style.backgroundColor = 'green';
+                        document.querySelector("#answer2").innerHTML = "Correct!";
+                    }
+                    else {
+                        inputElement.style.backgroundColor = 'red';
+                        document.querySelector("#answer2").innerHTML = "Incorrect, the answer is 米粉!";
+                    }
+                });
+            }); // This was missing
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <h3>What is the best laksa in Malaysia?</h3>
+
+                <button type="text" class="incorrect">Thomas's Laksa</button>
+                <button type="text" class="incorrect">Penang Laksa</button> <!-- Fixed typo here -->
+                <button type="text" class="incorrect">Curry Laksa</button>
+                <button type="text" class="correct">Sarawak Laksa</button>
+                <button type="text" class="incorrect">Nyonya Laksa</button>
+                <button type="text" class="incorrect">Johor Laksa</button>
+
+                <p id="answer1"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <h3>What is the mee of the authentic laksa?</h3>
+
+                <form>
+                    <input type="text" placeholder="Mee Type">
+                    <button id="check" type="button">Check Answer</button> <!-- Added type="button" -->
+                    <p id="answer2"></p>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
