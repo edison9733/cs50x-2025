@@ -28,16 +28,15 @@ def index():
         name = request.form.get("name")
         month = request.form.get("month")
         day = request.form.get("day")
+        if not name or not month or not days:
+            return redirect("/")
+        db.execute("INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)", name.capitalize(), month, day)
 
-         db.execute("INSERT INTO birthdays (name, month, day) VALUES (:name, :month, :day)",
-            name = name,
-            month = month,
-            day = day)
 
         # TODO: Add the user's entry into the database
          # Inssert info into db table
 
-        return redirect("/")
+
 
     else:
 
