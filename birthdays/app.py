@@ -28,11 +28,11 @@ def index():
         name = request.form.get("name")
         month = request.form.get("month")
         day = request.form.get("day")
-        if not name or not month or not days:
-            return redirect("/")
+        if not name or not month or not day:
+            
         db.execute("INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)", name.capitalize(), month, day)
 
-
+        return redirect("/")
         # TODO: Add the user's entry into the database
          # Inssert info into db table
 
@@ -44,4 +44,9 @@ def index():
         rows = db.execute("SELECT * FROM birthdays")
         return render_template("index.html", rows=rows)
 
-
+@app.route("/delete", methods=["POST"])
+def delete():
+    idd=request.form.get("idd")
+    if idd:
+        db.execute("DELETE FROM birthdays WHERE id= ?", idd)
+    return redirect("/")
