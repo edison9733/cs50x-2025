@@ -60,9 +60,17 @@ def buy():
             return apology("Shares must be greater than 0")
 
         user_id = session["user_id"]
-        cash = db.execute("SELECT cash FROM users WHERE id=?", user_id)
-        printf(f'\n\n {cash} \n\n)
+        cash = db.execute("SELECT cash FROM users WHERE id=?", user_id)["0"]["cash"]
 
+        stock_name = stock["name"]
+        stock_price = stock("name")
+        total_price = stock_price * shares
+
+        if cash < total_price:
+            return apology("Insufficient Balance!")
+        else:
+            db.execute("UPDATE users SET CASH = ? WHERE id = ?", cash - total_price, user_id)
+            db.execute("INSERT INTO transactions (user_id, name, shares, price, type, symbol) VALUES (?,?,?, ?, )")
         return redirect("/")
 
 
