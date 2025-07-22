@@ -58,7 +58,9 @@ def buy():
             return apology("Shares must be a whole number!")
         if shares <= 0:
             return apology("Shares must be greater than 0")
-    
+        else:
+            
+
 
 
     else:
