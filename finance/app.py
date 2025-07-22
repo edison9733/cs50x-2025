@@ -46,6 +46,7 @@ def index():
 def buy():
     If request.method == "POST":
         symbol = request.form.get("symbol").upper()
+        shares = request.form.get("shares")
 
     else:
         return render_template("buy.html")
