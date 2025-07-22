@@ -11,9 +11,21 @@
 .red
 {
     font-size: medium;
-    color: red
+    color: red;
+}
 
-.small
+.green
 {
-    font-szie: small;
+    font-size: medium;
+    color: green;
+}
+.yellow
+{
+    font-size: medium;
+    color: yellow;
+}
+.goldenbrown
+{
+    font-size: medium;
+    color: golden brown;
 }
