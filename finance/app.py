@@ -66,6 +66,7 @@ def buy():
         if not symbol:
             return apology("Missing symbol", 400)
         if shares < 1:
+            
             return apology("Invalid shares", 400)
 
         stock = lookup(symbol)
