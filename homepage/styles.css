@@ -1,31 +1,31 @@
-.centered
-{
+.centered {
     text-align: center;
 }
 
-.head
-{
+.head {
     font-size: large;
 }
 
-.red
-{
-    font-size: medium;
-    color: red;
+.centered {
+    text-align: center;  /* Centers text horizontally */
 }
 
-.green
-{
-    font-size: medium;
-    color: green;
+.head {
+    font-size: large;    /* Large text size */
 }
-.yellow
-{
-    font-size: medium;
-    color: yellow;
+
+.red {
+    color: red;         /* Pure red text */
 }
-.goldenbrown
-{
-    font-size: medium;
-    color: golden brown;
+
+.green {
+    color: green;       /* Pure green text */
+}
+
+.yellow {
+    color: yellow;      /* Pure yellow text */
+}
+
+.goldenbrown {
+    color: goldenbrown; /* Named golden brown color */
 }
