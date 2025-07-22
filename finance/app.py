@@ -94,16 +94,19 @@ def buy():
     return redirect("/")
 
 
+
 @app.route("/history")
 @login_required
 def history():
     """Show history of transactions"""
-    search = db.execute("SELECT * FROM purchases WHERE user_id = :id", id=session["user_id"])
-    for trans in search:
-        print(trans)
-        trans["symbol"] = trans["company"]
-        trans["shares"] = trans["stocks"]
-    return render_template("history.html", trans=search)
+    transactions = db.execute("""
+        SELECT symbol, shares, price, transacted, type
+        FROM transactions
+        WHERE user_id = ?
+        ORDER BY transacted DESC
+    """, session["user_id"])
+
+    return render_template("history.html", transactions=transactions)
 
 
 
