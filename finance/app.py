@@ -83,7 +83,7 @@ def buy():
     expenditure = current_price * int(request.form.get("shares"))
     # ensures that user has sufficent funds for purchase
     if expenditure > float(current_balance):
-        return apology("you do. ot have sufficient funds for this purchase")
+        return apology("you do not have sufficient funds for this purchase")
     # updates data tables accordingly
     db.execute("INSERT INTO purchases(user_id, stocks, price, company) VALUES(?,?,?,?)",
     session["user_id"], request.form.get("shares"), search_dict["price"], search_dict["symbol"])
