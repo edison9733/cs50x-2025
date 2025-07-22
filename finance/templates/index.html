@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <form action="/" method="post">
+            <table class="table table-striped">
+                <thead>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>TOTAL</th>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ total | usd }}</td>
+                    <</tr>
+
+                </tfoot>
+                <tbody>
+
+                    {% for value in shares %}
+                    <tr>
+                        <td>{{ value.symbol }}</td>
+                        <td>{{ value.name }}</td>
+                        <td>{{ value.sharesl }}</td>
+                        <td>{{ value.price }}</td>
+                        <td>{{ value.shares * value.price | usd }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td>Cash</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}
