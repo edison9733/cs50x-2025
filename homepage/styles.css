@@ -11,21 +11,21 @@
 .red
 {
     font-size: medium;
-    color: red;
+    color-text: red;
 }
 
 .green
 {
     font-size: medium;
-    color: green;
+    color-text: green;
 }
 .yellow
 {
     font-size: medium;
-    color: yellow;
+    color-text: yellow;
 }
 .goldenbrown
 {
     font-size: medium;
-    color: golden brown;
+    color-text: golden brown;
 }
