@@ -58,9 +58,12 @@ def buy():
             return apology("Shares must be a whole number!")
         if shares <= 0:
             return apology("Shares must be greater than 0")
-        else:
-            
 
+        user_id = session["user_id"]
+        cash = db.execute("SELECT cash FROM users WHERE id=?", user_id)
+        printf(f'\n\n {cash} \n\n)
+
+        return redirect("/")
 
 
     else:
