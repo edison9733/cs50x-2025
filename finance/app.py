@@ -44,8 +44,7 @@ def index():
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
-    """Buy shares of stock"""
-    return apology("TODO")
+    stocks = response.
 
 
 @app.route("/history")
@@ -143,7 +142,7 @@ def register():
         hash = generate_password_hash(password)
         try:
             db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash)
-            return direct('/')
+            return direct("/")
         except:
             return apology("The username has been registered!")
     else:
