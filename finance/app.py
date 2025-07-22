@@ -174,7 +174,10 @@ def quote():
     if request.method =="POST"
         result = lookup(request.form.get("symbol"))
 
-        return render_template("quoted.html, some_list=result)
+        return render_template("quoted.html, item=item, usd=usd)"
+def usd(value):
+    """ Format value as USD"""
+    return f"${value:, .2f}"
 
 
 
