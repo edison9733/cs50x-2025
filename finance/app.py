@@ -218,37 +218,64 @@ def register():
     return redirect("/")
 
 
-
 @app.route("/sell", methods=["GET", "POST"])
 @login_required
 def sell():
     """Sell shares of stock"""
     if request.method == "GET":
-        return render_template("sell.html")
-    # ensure symbol is entered
-    if request.form.get("symbol") == '':
-        return apology("must provide symbol", 403)
-    # ensures that symbol is valid
-    if lookup(request.form.get("symbol")) == None:
-        return apology("invalid symbol", 403)
-    shares = db.execute("SELECT SUM(stocks) AS shares FROM purchases WHERE user_id = :id AND company = :company", id = session["user_id"], company=request.form.get("company"))
-    # ensures that user own share of this stock
-    if shares[0]["shares"] == None:
-        return apology("you do not own any of this stock")
-    # ensures user is not selling more than they have
-    if int((request.form.get("shares"))) > shares[0]["shares"]:
-        return apology("you do not own enough shares for this sale")
-    # ensures shares is a positive number
-    if int(request.form.get("shares")) < 1:
-        return apology("Invalid number of shares")
-    search_dict = lookup(request.form.get("symbol")
-    current_balance = db.execute("SELECT cash FROM uses WHERE id =:id", id=session["user_id"])
-    # calculate profit and update tables
-    profit = search_dict["price"] * int(request.form.get("shares"))
-    db.execute("INSERT INTO purchases(user_id, stocks, price, company) VALUES (?,?,?,?)",
-    session["user_id"], (-int(request.form.get("shares"))), search_dict["price"], search_dict["symbol]")
+        # Get user's current holdings for dropdown
+        stocks = db.execute("""
+            SELECT symbol, SUM(shares) as total_shares
+            FROM transactions
+            WHERE user_id = ?
+            GROUP BY symbol
+            HAVING total_shares > 0
+        """, session["user_id"])
+        return render_template("sell.html", stocks=stocks)
 
-    db.execute("UPDATE users SET cash = :new_cash WHERE id = :id", new_cash=current_balance[0]["cash"] + profit, id=session["user_id"])
+    # POST method handling
+    symbol = request.form.get("symbol").upper()
+    try:
+        shares = int(request.form.get("shares"))
+    except:
+        return apology("Invalid number of shares", 400)
+
+    # Validation
+    if not symbol:
+        return apology("Must provide symbol", 400)
+    if shares < 1:
+        return apology("Must provide positive number of shares", 400)
+
+    stock = lookup(symbol)
+    if not stock:
+        return apology("Invalid symbol", 400)
+
+    # Check available shares
+    available = db.execute("""
+        SELECT SUM(shares) as total
+        FROM transactions
+        WHERE user_id = ? AND symbol = ?
+    """, session["user_id"], symbol)[0]["total"]
+
+    if not available or available < shares:
+        return apology("Not enough shares to sell", 400)
+
+    # Record transaction
+    db.execute("""
+        INSERT INTO transactions
+        (user_id, symbol, shares, price, type)
+        VALUES (?, ?, ?, ?, 'sell')
+    """, session["user_id"], symbol, -shares, stock["price"])
+
+    # Update user cash
+    sale_value = stock["price"] * shares
+    db.execute("""
+        UPDATE users
+        SET cash = cash + ?
+        WHERE id = ?
+    """, sale_value, session["user_id"])
+
+    flash("Sale completed successfully!")
     return redirect("/")
 
 def errorhandler(e):
