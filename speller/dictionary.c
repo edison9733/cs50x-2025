@@ -51,12 +51,12 @@ unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
     unsigned long total = 0;
-    for (int i = 0; word[i] != '\0'; i++)
+    for (int i = 0; i < strlen(word); i++)
     {
         total += tolower(word[i]);
     }
     return total % N; // Simple hash function that sums ASCII values and takes modulo N to find its bucket
-    return toupper(word[0]) - 'A';
+
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -105,10 +105,6 @@ unsigned int size(void)
     if (word_count > 0)
     {
         return word_count;
-    }
-    else
-    {
-        return 0;
     }
     return 0;
 }
