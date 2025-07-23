@@ -1,32 +1,20 @@
-card_number = input("Number: ")
-if not card_number.isdigit()  # Keep as string to handle leading zeros
-    print("{card_number} is an invalid number")
-    exit()   # exit the program
+#TODO
 
-sum = 0
-digit_count = len(card_number) # since it is string need to use len
+from cs50 import get_int
 
-# Luhn's Algorithm
-for i in range(digit_count):
-    digit = int(card_number[digit_count - 1 -i])
-    if i % 2 == 1:
-        digit *= 2
-        if digit > 9
-            digit = digit //  10 + digit % 10 # Sum digits of products > 9
-    sum += digit
+while True:
+    card = get_int("Card: ")
+    if card > 0:
+        break
 
-#  Validate the card number
-first_two = int(card_number[:2])
-if (sum % 10 == 0):
-    if (digit_count == 15 and first_two in [34, 37]):
-        print("Amex")
-    if (digit_count == 16 and first_two in range(51,56):
-        print("MASTERCARD")
-    if (digit_count == 13 or digit_count == 16) and card_number[0] == '4'):
-        print("VISA")
-    else:
-        print("INVALID")
-else:
-    print("INVALID")
-
-
+def luhn_checksum(card):
+    def digits_of(n):
+        return [int(d) for d in str(n)]
+    digits = digits_of(card)
+    odd_digits = digits[-1::-2]
+    even_digits = digits[-2::-2]
+    checksum = 0
+    checksum += sum(odd_digits)
+    for d in even_digits:
+        checksum += sum(digits_of(d*2))
+    return checksum % 10
