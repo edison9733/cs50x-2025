@@ -1,5 +1,3 @@
-#TODO
-
 from cs50 import get_int
 
 while True:
@@ -16,36 +14,24 @@ def luhn_checksum(card):
     checksum = 0
     checksum += sum(odd_digits)
     for d in even_digits:
-        checksum += sum(digits_of(d*2))
+        checksum += sum(digits_of(d * 2))
     return checksum % 10
 
-length = 0
-visa = card
-master = card
-amex = card
+# Convert card number to string for easy handling
+card_str = str(card)
+length = len(card_str)
 
-# Differentiate between VISA, Master and AMEX
-length = len(str(card))
+# Check starting digits for type
+first_digit = int(card_str[0])
+first_two_digits = int(card_str[:2])
 
-# Identify if card is a VISA
-while visa >= 10:
-    visa = int(visa/10)
-
-# Identify if card is an AMEX
-while amex >= 10**13
-    amex = int(amex/10**13)
-
-# Identify if card is a Mastercard
-while master >= 10**14:
-    master = int(master/10**14)
-
-# Print outcome
+# Verify with Luhn Algorithm
 if luhn_checksum(card) == 0:
-    if visa == 4 and (length == 13 or length == 16):
+    if first_digit == 4 and (length == 13 or length == 16):
         print("VISA")
-    elif length == 15 and (amex == 34 or amex == 37):
+    elif length == 15 and (first_two_digits == 34 or first_two_digits == 37):
         print("AMEX")
-    elif length == 16 and (51 <= 55):
+    elif length == 16 and (51 <= first_two_digits <= 55):
         print("MASTERCARD")
     else:
         print("INVALID")

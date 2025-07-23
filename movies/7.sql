@@ -1,4 +1,5 @@
 SELECT title, rating
 FROM movies
-JOIN ratings on moivies.id = ratings.movie_id
-ORDER BY rating DESC;
+JOIN ratings on movies.id = ratings.movie_id
+WHERE year = 2010
+ORDER BY rating DESC, title ASC;
