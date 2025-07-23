@@ -1,5 +1,5 @@
 .centered {
-    text-align: center
+    text-align: center;
     background-color: powerblue;
 }
 
@@ -13,8 +13,8 @@
 
 .head {
     font-size: large;
-    font-family: Arial Black
-    font-style: Berliner  /* Large text size */
+    font-family: Arial Black;
+    font-style: Berliner;  /* Large text size */
 }
 
 .red {
