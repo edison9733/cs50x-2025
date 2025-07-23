@@ -103,13 +103,6 @@ void print_winner(void)
             printf("%s\n", candidates[i].name);
         }
     }
-    // If no candidates have votes, do nothing
-    if (max_votes == 0)
-    {
-        printf("No votes cast.\n");
-    }
-    // No return value needed, as the function is void
-    // The function will automatically return when it reaches the end
 
     return;
 }
