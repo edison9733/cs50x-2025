@@ -1,16 +1,15 @@
-height = int(input("Height: "))
+# TODO
+from cs50 import get_int
 
-if 0 < height < 9:
-    for row in range(height):
+while True:
+    n = get_int("Height: ")
+    if n > 0 and n < 9:
+        break
 
-        print(" " * (height - row - 1), end ="")
-
-        print("#" * (row + 1), end = "")
-
-        print("  " , end= "")
-
-        print("#" * (row + 1))
-
-else:
-    print(f"{height} is not a valid input")
-
+for i in range(0, n ,1):
+    for j in range(0, n+i+3, 1):
+        if (j == n or j == n+1 or i+j < n-1):
+            print(" ",end="")
+        else:
+            print("#", end="")
+    print()
