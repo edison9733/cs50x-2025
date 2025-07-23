@@ -11,7 +11,9 @@
 }
 
 .head {
-    font-size: large;    /* Large text size */
+    font-size: large;
+    font-family: Arial Black
+    font-style: Berliner  /* Large text size */
 }
 
 .red {
