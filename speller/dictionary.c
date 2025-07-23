@@ -115,13 +115,20 @@ bool unload(void)
     // TODO
     for (int i = 0; i < N; i++)
     {
+        // Set cursor to the start of the linked list
         node *cursor = table[i];
-        while (cursor != NULL)
+        // If cursor is not NULL, free memory
+
+        while (cursor)
         {
-            node *temp = cursor;
+            // Create temp
+            node *tmp = cursor;
+            // Move cursor to next node
             cursor = cursor->next;
-            free(temp);
+            // Free up temp
+            free(tmp);
         }
+        // If cursor is NULL
         if (cursor == NULL)
             {
                 return true;
