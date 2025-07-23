@@ -34,10 +34,10 @@ bool check(const char *word)
     node *cursor = table[hash_value];
 
     // Fo through linked list at that bucket
-    while (cursor != NULL)
+    while (cursor != 0)
     {
         // Compare word to cursor's word
-        if (strcasecmp(cursor->word, word) == 0)
+        if (strcasecmp(word, cursor->word) == 0)
         {
             return true; // If they match, return true
         }
