@@ -69,11 +69,11 @@ bool load(const char *dictionary)
     // Return NULL if file could not be opened
     if (file == NULL)
     {
-        printf("Could not open %s.\n", dictionary);
+        printf("Could not open %s\n", dictionary);
         return false;
     }
     // Declare variable called word
-    char word[LENGTH + 1];
+    char word[LENGTH+1];
 
     // Scan dictionary for strings up until EOF
     while ( fscanf(file, "%s", word) != EOF )
