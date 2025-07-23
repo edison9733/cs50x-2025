@@ -1,16 +1,14 @@
-sort1 uses: TODO bubble sort
+sort1 uses: Bubble sort
 
-How do you know?: faster than selection sort for sorted data
+How do you know?: It takes less time for sorted list and more time for random list
 
-sort2 uses: TODO selection sort
+sort2 uses: Merge sort
 
-How do you know?: slower than bubble sort for sorted data
+How do you know?: It takes about the same (and less) time for sorted and random lists
 
-sort3 uses: merge sort
+sort3 uses: Selection port
 
-How do you know?: Fastest for large datasets in random order
+How do you know?: It takes about the same (and more) time for sorted and random lists
 
 
 
-in order sort ( bubble sort is faster than selection sort ): TODO
-in random sort ( merge sort is the fastest ): TODO
