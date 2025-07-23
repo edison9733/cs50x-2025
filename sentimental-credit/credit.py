@@ -18,3 +18,36 @@ def luhn_checksum(card):
     for d in even_digits:
         checksum += sum(digits_of(d*2))
     return checksum % 10
+
+length = 0
+visa = card
+master = card
+amex = card
+
+# Differentiate between VISA, Master and AMEX
+length = len(str(card))
+
+# Identify if card is a VISA
+while visa >= 10:
+    visa = int(visa/10)
+
+# Identify if card is an AMEX
+while amex >= 10**13
+    amex = int(amex/10**13)
+
+# Identify if card is a Mastercard
+while master >= 10**14:
+    master = int(master/10**14)
+
+# Print outcome
+if luhn_checksum(card) == 0:
+    if visa == 4 and (length == 13 or length == 16):
+        print("VISA")
+    elif length == 15 and (amex == 34 or amex == 37):
+        print("AMEX")
+    elif length == 16 and (51 <= 55):
+        print("MASTERCARD")
+    else:
+        print("INVALID")
+else:
+    print("INVALID")
