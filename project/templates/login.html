@@ -1,0 +1,37 @@
+
+
+<!-- login.html - Login page -->
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <h2 class="text-center mb-4">
+                    <i class="fas fa-sign-in-alt"></i> Log In
+                </h2>
+                <form action="/login" method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" name="password" placeholder="Password" type="password" required>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Log In</button>
+                </form>
+                <hr>
+                <p class="text-center text-muted">
+                    Don't have an account? <a href="/register">Register here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,43 @@
+<!-- register.html - Registration page -->
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <h2 class="text-center mb-4">
+                    <i class="fas fa-user-plus"></i> Register
+                </h2>
+                <form action="/register" method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto"name="username" placeholder="Username" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input autocomplete="off" class="form-control mx-auto w-auto" name="email" placeholder="Email" type="email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="confirmation">Confirm Password</label>
+                        <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm Password" type="password">
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Register</button>
+                </form>
+                <hr>
+                <p class="text-center text-muted">
+                    Already have an account? <a href="/login">Log in here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,28 @@
+<!-- apology.html - Error page with memes -->
+{% extends "layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block main %}
+    <div class="apology-container fade-in">
+        <h1 class="mb-4">{{ code }} - Oops!</h1>
+
+        <!-- Meme image from memegen API -->
+        <img class="apology-meme"
+             src="https://api.memegen.link/images/{{ meme }}/{{ top }}/{{ bottom }}.png"
+             alt="{{ top }} {{ bottom }}">
+
+        <div class="mt-4">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> Go Home
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+

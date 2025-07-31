@@ -1,0 +1,99 @@
+<!-- history.html - Historical data page -->
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        <i class="fas fa-chart-line"></i> Your Progress History
+    </h1>
+
+    <!-- Weight/BMI Chart -->
+    <div class="card">
+        <h3><i class="fas fa-weight"></i> Weight & BMI Trend</h3>
+        <canvas id="weight-chart"
+                data-weights="{{ weight_history|map(attribute='weight')|list|tojson }}"
+                data-bmi="{{ weight_history|map(attribute='bmi')|list|tojson }}"
+                data-dates="{{ weight_history|map(attribute='date')|list|tojson }}">
+        </canvas>
+    </div>
+
+    <!-- Calorie Chart -->
+    <div class="card">
+        <h3><i class="fas fa-fire"></i> Calorie History</h3>
+        <canvas id="calorie-chart"
+                data-consumed="{{ calorie_history|map(attribute='calories_consumed')|list|tojson }}"
+                data-burnt="{{ calorie_history|map(attribute='calories_burnt')|list|tojson }}"
+                data-dates="{{ calorie_history|map(attribute='date')|list|tojson }}">
+        </canvas>
+    </div>
+
+    <!-- Data Tables -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <h3>Recent Weight Records</h3>
+                {% if weight_history %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Weight</th>
+                                    <th>BMI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in weight_history[:10] %}
+                                    <tr>
+                                        <td>{{ record.date }}</td>
+                                        <td>{{ "%.1f"|format(record.weight) }} kg</td>
+                                        <td>{{ "%.1f"|format(record.bmi) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No weight records yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <h3>Recent Daily Summary</h3>
+                {% if calorie_history %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Consumed</th>
+                                    <th>Burnt</th>
+                                    <th>Net</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in calorie_history[:10] %}
+                                    <tr>
+                                        <td>{{ record.date }}</td>
+                                        <td>{{ "%.0f"|format(record.calories_consumed) }}</td>
+                                        <td>{{ "%.0f"|format(record.calories_burnt) }}</td>
+                                        <td class="{% if record.calories_consumed - record.calories_burnt < 0 %}text-success{% endif %}">
+                                            {{ "%.0f"|format(record.calories_consumed - record.calories_burnt) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No calorie records yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
