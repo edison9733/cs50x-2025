@@ -274,7 +274,7 @@ function initializeFormValidation() {
                     errorDiv.className = 'invalid-feedback';
                     // place it inside div
                     errorDiv.textContent = input.validationMessage;
-                    // checking
+                    //  create an error message and put it below the input field but only if there isnt aleady an error message there
                     if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('invalid-feedback')) {
                         input.parentNode.appendChild(errorDiv);
                     }
