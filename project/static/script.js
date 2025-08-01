@@ -268,10 +268,13 @@ function initializeFormValidation() {
                     input.classList.add('is-invalid');
 
                     // Add error message
+                    // Create a new div element
                     const errorDiv = document.createElement('div');
+                    // show error message
                     errorDiv.className = 'invalid-feedback';
+                    // place it inside div
                     errorDiv.textContent = input.validationMessage;
-
+                    // checking
                     if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('invalid-feedback')) {
                         input.parentNode.appendChild(errorDiv);
                     }
