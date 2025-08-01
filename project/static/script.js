@@ -284,7 +284,7 @@ function initializeFormValidation() {
                 if (input.checkValidity()) {
                     input.classList.remove('is-invalid');
                     const errorDiv = input.nextElementSibling;
-                    // find the error message and delete it 
+                    // find the error message and delete it
                     if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
                         errorDiv.remove();
                     }
@@ -308,10 +308,10 @@ function initializeMotivationalQuotes() {
         "Sweat is just fat crying.",
         "You don't have to be great to start, but you have to start to be great."
     ];
-
+    // Find the quote display element
     const quoteElement = document.querySelector('#motivational-quote');
     if (quoteElement) {
-        // Display random quote
+        // Display random quote from the array and put it in the HTML element
         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
         quoteElement.textContent = randomQuote;
 
