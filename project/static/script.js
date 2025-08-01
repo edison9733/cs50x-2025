@@ -252,17 +252,17 @@ function initializeFormValidation() {
             if (!form.checkValidity()) {
                 // stop the invalid form from submitting
                 e.preventDefault();
-                // stop other form events 
+                // stop other form events
                 e.stopPropagation();
 
-                // Add visual feedback
+                // Add visual feedback with red styling
                 const invalidInputs = form.querySelectorAll(':invalid');
                 invalidInputs.forEach(input => {
                     input.classList.add('is-invalid');
 
                     // Add error message
                     const errorDiv = document.createElement('div');
-                    errorDiv.className = 'invalid-feedback';
+                    errorDiv.className = 'invalid-feedback'; 
                     errorDiv.textContent = input.validationMessage;
 
                     if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('invalid-feedback')) {
