@@ -213,7 +213,7 @@ function initializeCharts() {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true,
+                        beginAtZero: true, // y-aixs starts at 0
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
                         },
