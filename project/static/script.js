@@ -202,11 +202,11 @@ function initializeCharts() {
                 datasets: [{
                     label: 'Calories Consumed',
                     data: consumedData,
-                    backgroundColor: '#ff6b6b',
+                    backgroundColor: '#ff6b6b', // red colour
                 }, {
                     label: 'Calories Burnt',
                     data: burntData,
-                    backgroundColor: '#00ff88',
+                    backgroundColor: '#00ff88', // green colur 
                 }]
             },
             options: {
