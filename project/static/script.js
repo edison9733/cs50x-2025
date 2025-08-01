@@ -194,6 +194,7 @@ function initializeCharts() {
     const calorieChartCanvas = document.querySelector('#calorie-chart');
     if (calorieChartCanvas && window.Chart) {
         const ctx = calorieChartCanvas.getContext('2d');
+        // JSON to store actual array of numbers
         const consumedData = JSON.parse(calorieChartCanvas.dataset.consumed || '[]');
         const burntData = JSON.parse(calorieChartCanvas.dataset.burnt || '[]');
         const dates = JSON.parse(calorieChartCanvas.dataset.dates || '[]');
