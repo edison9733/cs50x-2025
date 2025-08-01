@@ -80,7 +80,7 @@ function initializeWorkoutCalculator() {
                 const caloriesPerMinute = parseFloat(selectedOption.dataset.caloriesPerMinute) || 0;
                 const duration = parseFloat(durationInput.value) || 0;
                 const totalCalories = caloriesPerMinute * duration;
-                // Display results
+                // Display results with replace the content inside the element with new new HTML
                 caloriesDisplay.innerHTML = `
                     <div class="calories-burn-display">
                         <h3>${totalCalories.toFixed(1)}</h3>
@@ -177,7 +177,9 @@ function initializeCharts() {
                         }
                     }
                 },
+                // add extra functionality 
                 plugins: {
+                    // little box that explains what color means in a chart
                     legend: {
                         labels: {
                             color: '#ffffff'
