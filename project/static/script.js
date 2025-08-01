@@ -1,8 +1,9 @@
-// CS50x 2025 Health Tracker JavaScript
+
 // Handles dynamic functionality and user interactions
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality when DOM is loaded
+    // document = entire webpage || addEventListener = listen to smth to happen || DOMContentLoaded=when the page is fully loaded || function()=then do this stuff
     initializeCalorieCalculator();
     initializeWorkoutCalculator();
     initializeCharts();
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Calorie Calculator for Food Items
 function initializeCalorieCalculator() {
+    // Find the items where they are displayed
     const foodSelect = document.querySelector('#food_id');
     const quantityInput = document.querySelector('#quantity');
     const nutritionInfo = document.querySelector('#nutrition-info');
@@ -22,16 +24,19 @@ function initializeCalorieCalculator() {
         const updateNutrition = () => {
             const selectedOption = foodSelect.options[foodSelect.selectedIndex];
             if (selectedOption && selectedOption.value) {
+                // Convert to number or 0
                 const calories = parseFloat(selectedOption.dataset.calories) || 0;
                 const carbs = parseFloat(selectedOption.dataset.carbs) || 0;
                 const protein = parseFloat(selectedOption.dataset.protein) || 0;
                 const fat = parseFloat(selectedOption.dataset.fat) || 0;
+                // Default to 100g if not specified
                 const servingSize = parseFloat(selectedOption.dataset.servingSize) || 100;
-
+                // Calculate the serving size
                 const quantity = parseFloat(quantityInput.value) || 0;
                 const multiplier = quantity / servingSize;
 
                 // Update nutrition display
+                // Calculate total calories, carbs, protein, fat
                 nutritionInfo.innerHTML = `
                     <div class="nutrition-grid">
                         <div class="nutrition-item">
@@ -54,13 +59,14 @@ function initializeCalorieCalculator() {
                 `;
             }
         };
-
+        // When the user changes food selection, it recalculate nutrition
         foodSelect.addEventListener('change', updateNutrition);
         quantityInput.addEventListener('input', updateNutrition);
     }
 }
 
 // Workout Calculator
+// same as calories calculator but not so much complicated
 function initializeWorkoutCalculator() {
     const workoutSelect = document.querySelector('#workout_id');
     const durationInput = document.querySelector('#duration');
@@ -73,7 +79,7 @@ function initializeWorkoutCalculator() {
                 const caloriesPerMinute = parseFloat(selectedOption.dataset.caloriesPerMinute) || 0;
                 const duration = parseFloat(durationInput.value) || 0;
                 const totalCalories = caloriesPerMinute * duration;
-
+                // Display results
                 caloriesDisplay.innerHTML = `
                     <div class="calories-burn-display">
                         <h3>${totalCalories.toFixed(1)}</h3>
@@ -82,13 +88,14 @@ function initializeWorkoutCalculator() {
                 `;
 
                 // Add visual feedback
+                // If calories more than 0, there is a an animation effect
                 if (totalCalories > 0) {
                     caloriesDisplay.classList.add('pulse');
-                    setTimeout(() => caloriesDisplay.classList.remove('pulse'), 1000);
+                    setTimeout(() => caloriesDisplay.classList.remove('pulse'), 1000); // after 1000 milliseconds = 1 second
                 }
             }
         };
-
+        // changes the result when the user changes the selections
         workoutSelect.addEventListener('change', calculateCalories);
         durationInput.addEventListener('input', calculateCalories);
     }
@@ -99,11 +106,14 @@ function initializeCharts() {
     // Weight/BMI Chart
     const weightChartCanvas = document.querySelector('#weight-chart');
     if (weightChartCanvas && window.Chart) {
+        // Get the 2D drawing content
         const ctx = weightChartCanvas.getContext('2d');
+        // Get weight data from HTML then convert to Javascript
         const weightData = JSON.parse(weightChartCanvas.dataset.weights || '[]');
+        // Get BMI data from HTML and convert to array
         const bmiData = JSON.parse(weightChartCanvas.dataset.bmi || '[]');
         const dates = JSON.parse(weightChartCanvas.dataset.dates || '[]');
-
+        // Create new Chart.js
         new Chart(ctx, {
             type: 'line',
             data: {
@@ -111,43 +121,47 @@ function initializeCharts() {
                 datasets: [{
                     label: 'Weight (kg)',
                     data: weightData,
-                    borderColor: '#00ff88',
-                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
-                    tension: 0.4,
-                    yAxisID: 'y'
+                    borderColor: '#00ff88', // green colour
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)', // light green
+                    tension: 0.4, // Smooth curved lines
+                    yAxisID: 'y' //use left y-axis
                 }, {
                     label: 'BMI',
                     data: bmiData,
-                    borderColor: '#4ecdc4',
-                    backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                    borderColor: '#4ecdc4', // teal color
+                    backgroundColor: 'rgba(78, 205, 196, 0.1)', // light teal
                     tension: 0.4,
-                    yAxisID: 'y1'
+                    yAxisID: 'y1' //use right y-axis
                 }]
             },
+            // Create chart options for adjusts to screen size
             options: {
                 responsive: true,
                 interaction: {
                     mode: 'index',
                     intersect: false,
                 },
+                // linear scale
                 scales: {
+                    // show on left side
                     y: {
                         type: 'linear',
                         display: true,
                         position: 'left',
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
+                            color: 'rgba(255, 255, 255, 0.1)' // light grid lines
                         },
                         ticks: {
-                            color: '#b0b0b0'
+                            color: '#b0b0b0' // gray text colour
                         }
                     },
+                    // show on right side
                     y1: {
                         type: 'linear',
                         display: true,
                         position: 'right',
                         grid: {
-                            drawOnChartArea: false,
+                            drawOnChartArea: false, // Dont draw grid lines to avoid clutter
                         },
                         ticks: {
                             color: '#b0b0b0'

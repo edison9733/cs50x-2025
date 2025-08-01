@@ -1,58 +1,59 @@
-/* CS50x 2025 Health Tracker - Dark Theme Styles
-   A modern dark theme with motivational elements */
-
+/* Set the main colours for the site */
 :root {
-    /* Dark theme color palette */
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #1a1a1a;
-    --bg-tertiary: #2a2a2a;
-    --text-primary: #ffffff;
-    --text-secondary: #b0b0b0;
-    --accent-primary: #00ff88;
-    --accent-secondary: #ff6b6b;
-    --accent-tertiary: #4ecdc4;
-    --border-color: #333333;
-    --shadow: rgba(0, 255, 136, 0.1);
-    --error: #ff4757;
-    --warning: #feca57;
-    --success: #48dbfb;
+    /* Dark colour theme */
+    --bg-primary: #0a0a0a;   /* Primary background colours */
+    --bg-secondary: #1a1a1a; /* Secondary background colours */
+    --bg-tertiary: #2a2a2a;  /* Tertiary backgroudn colours */
+    --text-primary: #ffffff; /* Primary white text */
+    --text-secondary: #b0b0b0; /* Secondary light grey text */
+    --accent-primary: #00ff88; /* bright green */
+    --accent-secondary: #ff6b6b; /* salmon red  */
+    --accent-tertiary: #4ecdc4; /* teal  */
+    --border-color: #333333; /* dark green  */
+    --shadow: rgba(0, 255, 136, 0.1); /* translucent bright green with 10% opacity  */
+    --error: #ff4757; /* red  */
+    --warning: #feca57; /*  yellow or orange  */
+    --success: #48dbfb; /* light blue   */
 }
 
+/*  Global Styles  */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Base styles */
+/* Base styles for body */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
+    /* line height and height  */
     line-height: 1.6;
     min-height: 100vh;
+    /*  Radial gradients for added visual appeal  */
     background-image:
         radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
 }
 
-/* Navigation */
+/* Navigation aka top navigation bar*/
 .navbar {
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-secondary);   /* dark colour  */
     border-bottom: 1px solid var(--border-color);
-    padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
+    padding: 1rem 0; /*  1rem= space on top and bottom & 0=no space on left and right */
+    position: sticky;  /* stays at the top   */
+    top: 0; /* make it at the very top of the screen with 0 pixels from top  */
+    z-index: 1000; /*ensure the navbar stays above other elements  */
+    backdrop-filter: blur(10px); /* little transparent with a blurred effect  */
     background-color: rgba(26, 26, 26, 0.9);
 }
 
 .navbar-brand {
-    color: var(--accent-primary) !important;
+    color: var(--accent-primary) !important; /* this style is more important than any other  */
     font-weight: 700;
     font-size: 1.5rem;
-    text-decoration: none;
+    text-decoration: none; /* removes underline from links  */
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -63,26 +64,26 @@ body {
 }
 
 .nav-link {
-    color: var(--text-secondary) !important;
-    transition: all 0.3s ease;
-    position: relative;
+    color: var(--text-secondary) !important; /*  grey colour  */
+    transition: all 0.3s ease; /* all=animate all changing properties, 0.3s=animations takes 0.3seconds, ease=starts slow, speeds up then slows down */
+    position: relative; /* like moving a book on a shelf & can be nudghed from its postision */
     padding: 0.5rem 1rem !important;
 }
 
 .nav-link:hover {
-    color: var(--accent-primary) !important;
+    color: var(--accent-primary) !important; /* when hover, it changes into the accent colour  */
 }
 
 .nav-link::after {
     content: '';
-    position: absolute;
+    position: absolute; /* floating in the air & removed from normal flow compare to relative  */
     bottom: 0;
     left: 50%;
     width: 0;
     height: 2px;
     background-color: var(--accent-primary);
     transition: all 0.3s ease;
-    transform: translateX(-50%);
+    transform: translateX(-50%); /* movess horizontally left by half its own width  */
 }
 
 .nav-link:hover::after {
@@ -90,57 +91,61 @@ body {
 }
 
 /* Containers and Cards */
+
+/* wraps the main content of the page and make sure they are centered  */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
-
+/* used for individual sections of content with rectangular boxes with rounded corners  */
 .card {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    background-color: var(--bg-secondary);  /* dark colour  */
+    border: 1px solid var(--border-color);  /* slight border  */
+    border-radius: 12px;  /* rounded corners  */
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);  /* subtle shadows  */
     transition: all 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 30px var(--shadow);
+    transform: translateY(-2px);  /* when hover, it lifts up a bit  */
+    box-shadow: 0 6px 30px var(--shadow); /*   the shadows become darker */
     border-color: var(--accent-primary);
 }
 
 /* Dashboard Stats */
+
+/* Ensures all the cards are neatly placed   */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: grid; /* create a grid layout system with more flexible than traditional table layouts  */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensures many columns are displayed as much as possible based on the screen size */
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem; /* add space below an element */
 }
 
 .stat-card {
-    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%); /* gradient bg from darker to ligther shades  */
     padding: 1.5rem;
-    border-radius: 12px;
+    border-radius: 12px; /* rounded corners  */
     text-align: center;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color); /* slight border */
     transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-    transform: scale(1.05);
-    border-color: var(--accent-primary);
+    transform: scale(1.05);  /*  bigger */
+    border-color: var(--accent-primary); /* turn to bright green  */
 }
-
+/*  styling for the big numbers in stat cards */
 .stat-value {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--accent-primary);
     margin: 0.5rem 0;
 }
-
+/* styling for the description text under stat values */
 .stat-label {
     color: var(--text-secondary);
     font-size: 0.9rem;
@@ -149,54 +154,57 @@ body {
 }
 
 /* Forms */
+
+/* apply to form input fields like text boxes and dropdowns  */
 .form-control, .form-select {
-    background-color: var(--bg-tertiary);
+    background-color: var(--bg-tertiary); /* dark   */
     border: 1px solid var(--border-color);
-    color: var(--text-primary);
+    color: var(--text-primary); /*  white text */
     padding: 0.75rem 1rem;
     border-radius: 8px;
     transition: all 0.3s ease;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus, .form-select:focus {. /*  makes the input field highlight when selected */
     background-color: var(--bg-tertiary);
     border-color: var(--accent-primary);
     color: var(--text-primary);
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 136, 0.25);
-    outline: none;
+    outline: none; /* remove the outline */
 }
 
 .form-label {
-    color: var(--text-secondary);
+    color: var(--text-secondary); /*  light grey  */
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 500;  /* control text thickness  */
 }
 
 /* Buttons */
+/* provide styling for buttons, padding, rounded corners and a slight text transformation with uppercase  */
 .btn {
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
+    transition: all 0.3s ease; /* smoothly change in appearance  */
+    border: none;  /* removes the default button border */
+    cursor: pointer; /* changes mouse to a hand when hovering over button */
 }
-
+/*  change gradient colour from primary to tertiary of this button */
 .btn-primary {
     background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-tertiary) 100%);
-    color: var(--bg-primary);
+    color: var(--bg-primary); /* sets text color to the primary bg variable  */
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.5);
+    transform: translateY(-2px); /* pops up   */
+    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.5); /* box-shadow   */
 }
-
+/*  simple dark background with a narrow border  */
 .btn-secondary {
     background-color: var(--bg-tertiary);
-    color: var(--text-primary);
+    color: var(--text-primary); /* white text  */
     border: 1px solid var(--border-color);
 }
 
@@ -211,7 +219,7 @@ body {
 }
 
 .btn-danger:hover {
-    background-color: #ff3838;
+    background-color: #ff3838; /* turns to red  */
     transform: translateY(-2px);
 }
 
@@ -220,7 +228,7 @@ body {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     border-radius: 8px;
-    overflow: hidden;
+    overflow: hidden; /* ensures the users does not miss cliped info */
 }
 
 .table thead {
@@ -251,13 +259,13 @@ body {
     border-radius: 8px;
     margin-bottom: 1rem;
     border: 1px solid transparent;
-    animation: slideIn 0.5s ease;
+    animation: slideIn 0.5s ease; /* slide in from top when they appear  */
 }
 
 @keyframes slideIn {
     from {
         transform: translateY(-20px);
-        opacity: 0;
+        opacity: 0; /* control the transparency */
     }
     to {
         transform: translateY(0);
@@ -295,10 +303,10 @@ body {
     background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-tertiary) 100%);
     color: var(--bg-primary);
     font-weight: 600;
-    display: flex;
+    display: flex; /*  turns an element into a flex container */
     align-items: center;
-    justify-content: center;
-    transition: width 0.6s ease;
+    justify-content: center; /* horizontally aligns flex items(children) in the centre of their container */
+    transition: width 0.6s ease;  /* smoothly widen */
 }
 
 /* Motivational quotes */
@@ -324,7 +332,7 @@ body {
 
 /* Workout categories */
 .category-badge {
-    display: inline-block;
+    display: inline-block; /* behave like an inline elements(flows with texts)*/
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.875rem;
@@ -332,13 +340,14 @@ body {
     text-transform: uppercase;
 }
 
-.category-abs { background-color: #ff6b6b; }
-.category-shoulder { background-color: #4ecdc4; }
-.category-legs { background-color: #ffe66d; color: var(--bg-primary); }
-.category-chest { background-color: #a8e6cf; color: var(--bg-primary); }
-.category-cardio { background-color: #ff8b94; }
+.category-abs { background-color: #ff6b6b; } /* coral red*/
+.category-shoulder { background-color: #4ecdc4; } /* turquoise */
+.category-legs { background-color: #ffe66d; color: var(--bg-primary); } /*soft yellow */
+.category-chest { background-color: #a8e6cf; color: var(--bg-primary); } /* mint green */
+.category-cardio { background-color: #ff8b94; } /* pink */
 
 /* Animations */
+/* elements appear gradually from opacity 0 to 1 */
 .fade-in {
     animation: fadeIn 0.5s ease;
 }
@@ -351,7 +360,7 @@ body {
         opacity: 1;
     }
 }
-
+/* elements grow and shrink repeatedly for attention */
 .pulse {
     animation: pulse 2s infinite;
 }
@@ -368,24 +377,24 @@ body {
     }
 }
 
-/* Responsive design */
+/* Responsive design for Uses media queries for mobile. */
 @media (max-width: 768px) {
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* stats grid becomes 1 column on small screens*/
     }
 
     .container {
-        padding: 1rem;
+        padding: 1rem; /* less space */
     }
 
     .card {
-        padding: 1rem;
+        padding: 1rem; /* less space*/
     }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar with styling the browser scrollbar*/
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 8px; /* wide instead of thick */
 }
 
 ::-webkit-scrollbar-track {
@@ -401,14 +410,14 @@ body {
     background: var(--accent-tertiary);
 }
 
-/* Loading spinner */
+/* Loading spinner with animated loading indicator */
 .spinner {
     border: 3px solid var(--bg-tertiary);
-    border-radius: 50%;
+    border-radius: 50%; /* create the ring shape */
     border-top: 3px solid var(--accent-primary);
     width: 40px;
     height: 40px;
-    animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite; /* spins continuously using CSS animation*/
     margin: 2rem auto;
 }
 
