@@ -200,7 +200,7 @@ function initializeCharts() {
         const dates = JSON.parse(calorieChartCanvas.dataset.dates || '[]');
 
         new Chart(ctx, {
-            type: 'bar',
+            type: 'bar', // draw vertical bars
             data: {
                 labels: dates,
                 datasets: [{
@@ -213,7 +213,9 @@ function initializeCharts() {
                     backgroundColor: '#00ff88', // green colur
                 }]
             },
+            // settings for how the chart should look and behave
             options: {
+                // automatically resize the chart when teh screen size changes
                 responsive: true,
                 scales: {
                     y: {
