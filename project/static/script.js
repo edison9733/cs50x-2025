@@ -317,13 +317,14 @@ function initializeMotivationalQuotes() {
 
         // Change quote every 30 seconds
         setInterval(() => {
+            // Pick a new random quote
             const newQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            quoteElement.style.opacity = '0';
+            quoteElement.style.opacity = '0'; // make current quote invisible
             setTimeout(() => {
-                quoteElement.textContent = newQuote;
-                quoteElement.style.opacity = '1';
-            }, 500);
-        }, 30000);
+                quoteElement.textContent = newQuote; // changes to new quote
+                quoteElement.style.opacity = '1'; // make quote visible again
+            }, 500); // after 0.5s
+        }, 30000); // every 30s
     }
 }
 
@@ -333,11 +334,11 @@ function initializeProgressTracking() {
     const progressBars = document.querySelectorAll('.progress-bar');
     progressBars.forEach(bar => {
         const targetWidth = bar.style.width;
-        bar.style.width = '0%';
+        bar.style.width = '0%'; // start at 0
 
         setTimeout(() => {
             bar.style.width = targetWidth;
-        }, 100);
+        }, 100); //after 0.1s
     });
 
     // Add daily goal tracking
