@@ -343,11 +343,11 @@ function initializeProgressTracking() {
     // Update progress bars with animation
     const progressBars = document.querySelectorAll('.progress-bar');
     progressBars.forEach(bar => {
-        const targetWidth = bar.style.width;
+        const targetWidth = bar.style.width; // remember final width
         bar.style.width = '0%'; // start at 0
 
         setTimeout(() => {
-            bar.style.width = targetWidth;
+            bar.style.width = targetWidth; // animate to final width
         }, 100); //after 0.1s
     });
 
