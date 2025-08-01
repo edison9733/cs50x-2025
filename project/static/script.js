@@ -276,11 +276,15 @@ function initializeFormValidation() {
 
         // Remove error styling when user fixes the input
         const inputs = form.querySelectorAll('input, select');
+          // Find all inputs and dropdowns
         inputs.forEach(input => {
+            // When user changes this input
             input.addEventListener('input', function() {
+                // if the input is now valid , remove red error styling
                 if (input.checkValidity()) {
                     input.classList.remove('is-invalid');
                     const errorDiv = input.nextElementSibling;
+                    // find the error message and delete it 
                     if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
                         errorDiv.remove();
                     }
