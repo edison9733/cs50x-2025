@@ -262,7 +262,7 @@ function initializeFormValidation() {
 
                     // Add error message
                     const errorDiv = document.createElement('div');
-                    errorDiv.className = 'invalid-feedback'; 
+                    errorDiv.className = 'invalid-feedback';
                     errorDiv.textContent = input.validationMessage;
 
                     if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('invalid-feedback')) {
@@ -270,7 +270,7 @@ function initializeFormValidation() {
                     }
                 });
             }
-
+            // mark form as having been checked
             form.classList.add('was-validated');
         });
 
