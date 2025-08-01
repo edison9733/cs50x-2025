@@ -374,7 +374,7 @@ function initializeProgressTracking() {
     }
 }
 
-// Utility function to format numbers
+// Utility function to format numbers with commas (1000 becomes 1,000)
 function formatNumber(num) {
     return new Intl.NumberFormat('en-US').format(num);
 }
