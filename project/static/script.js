@@ -2,7 +2,7 @@
 // Handles dynamic functionality and user interactions
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all functionality when DOM is loaded
+    // Initialize all functionality (turn on the feacture) when DOM is loaded
     // document = entire webpage || addEventListener = listen to smth to happen || DOMContentLoaded=when the page is fully loaded || function()=then do this stuff
     initializeCalorieCalculator();
     initializeWorkoutCalculator();
@@ -22,9 +22,10 @@ function initializeCalorieCalculator() {
     if (foodSelect && quantityInput && nutritionInfo) {
         // Update nutrition info when food or quantity changes
         const updateNutrition = () => {
+            // Select food amongs the menu
             const selectedOption = foodSelect.options[foodSelect.selectedIndex];
             if (selectedOption && selectedOption.value) {
-                // Convert to number or 0
+                // Convert text to number or 0
                 const calories = parseFloat(selectedOption.dataset.calories) || 0;
                 const carbs = parseFloat(selectedOption.dataset.carbs) || 0;
                 const protein = parseFloat(selectedOption.dataset.protein) || 0;
@@ -410,5 +411,5 @@ alerts.forEach(alert => {
     setTimeout(() => {
         alert.style.opacity = '0';
         setTimeout(() => alert.remove(), 500);
-    }, 5000); 
+    }, 5000);
 });
