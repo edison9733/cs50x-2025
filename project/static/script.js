@@ -344,13 +344,18 @@ function initializeProgressTracking() {
     // Add daily goal tracking
     const dailyGoalElement = document.querySelector('#daily-goal-progress');
     if (dailyGoalElement) {
+        // Get calories consumed today
         const consumed = parseFloat(dailyGoalElement.dataset.consumed) || 0;
+        // Get calories burnt today
         const burnt = parseFloat(dailyGoalElement.dataset.burnt) || 0;
+        // Get daily calorie goal
         const goal = parseFloat(dailyGoalElement.dataset.goal) || 2000;
-
+        // Calculate net calories
         const net = consumed - burnt;
+        // Calculate percentage of goal reached
         const percentage = Math.min((net / goal) * 100, 100);
 
+        // Display percentange of daily goal and net calories
         dailyGoalElement.innerHTML = `
             <div class="progress" style="height: 30px;">
                 <div class="progress-bar" role="progressbar"
@@ -361,6 +366,7 @@ function initializeProgressTracking() {
                     ${percentage.toFixed(1)}% of daily goal
                 </div>
             </div>
+
             <p class="text-center mt-2">
                 ${net.toFixed(0)} / ${goal} calories
             </p>
