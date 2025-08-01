@@ -380,12 +380,13 @@ function formatNumber(num) {
 }
 
 // Add smooth scrolling
+// FIna all links that start with #
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+    anchor.addEventListener('click', function (e) { // when clicked
+        e.preventDefault(); // dont do normal link behaviour
+        const target = document.querySelector(this.getAttribute('href'));  // find the element the link points to
         if (target) {
-            target.scrollIntoView({
+            target.scrollIntoView({ // smoothly scroll to that element
                 behavior: 'smooth',
                 block: 'start'
             });
@@ -394,10 +395,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Add loading states
+// show loading spinner
 function showLoading(element) {
     element.innerHTML = '<div class="spinner"></div>';
 }
-
+// hide loading and show content
 function hideLoading(element, content) {
     element.innerHTML = content;
 }
@@ -408,5 +410,5 @@ alerts.forEach(alert => {
     setTimeout(() => {
         alert.style.opacity = '0';
         setTimeout(() => alert.remove(), 500);
-    }, 5000);
+    }, 5000); 
 });
