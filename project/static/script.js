@@ -206,7 +206,7 @@ function initializeCharts() {
                 }, {
                     label: 'Calories Burnt',
                     data: burntData,
-                    backgroundColor: '#00ff88', // green colur 
+                    backgroundColor: '#00ff88', // green colur
                 }]
             },
             options: {
@@ -250,7 +250,9 @@ function initializeFormValidation() {
         form.addEventListener('submit', function(e) {
             // Check if form is valid
             if (!form.checkValidity()) {
+                // stop the invalid form from submitting
                 e.preventDefault();
+                // stop other form events 
                 e.stopPropagation();
 
                 // Add visual feedback
