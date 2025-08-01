@@ -114,7 +114,7 @@ function initializeCharts() {
         // Get BMI data from HTML and convert to array
         const bmiData = JSON.parse(weightChartCanvas.dataset.bmi || '[]');
         const dates = JSON.parse(weightChartCanvas.dataset.dates || '[]');
-        // Create new Chart.js
+        // Create new Chart.js with using ctx to draw chart
         new Chart(ctx, {
             type: 'line',
             data: {
@@ -177,7 +177,7 @@ function initializeCharts() {
                         }
                     }
                 },
-                // add extra functionality 
+                // add extra functionality
                 plugins: {
                     // little box that explains what color means in a chart
                     legend: {
