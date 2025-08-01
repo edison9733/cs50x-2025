@@ -252,8 +252,9 @@ function initializeCharts() {
 function initializeFormValidation() {
     // Add custom validation to forms
     const forms = document.querySelectorAll('form');
+    // Validate all the forms , one by one
     forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function(e) { // function(e) that receives an "event" object
             // Check if form is valid
             if (!form.checkValidity()) {
                 // stop the invalid form from submitting
