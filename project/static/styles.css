@@ -172,6 +172,15 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 136, 0.25);
     outline: none; /* remove the outline */
 }
+/* overide bootstarp autofill styles */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus {
+    -webkit-text-fill-colour: var(--text-primary) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg-tertiary) inset !important;
+    background-color: var(--big-tertiary) !important;
+    transition: background-colour 5000s ease-in-out 0s;
+}
 
 .form-label {
     color: var(--text-secondary); /*  light grey  */

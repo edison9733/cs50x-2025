@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CS50x 2025 Health Tracker -->
     <title>Health Tracker: {% block title %}{% endblock %}</title>
 
     <!-- Bootstrap CSS -->
@@ -102,24 +101,15 @@
         {% block main %}{% endblock %}
     </main>
 
-    <!-- Motivational Quote (appears on all pages for logged in users) -->
-    {% if session["user_id"] %}
-        <div class="container">
-            <div class="motivational-quote fade-in">
-                <p id="motivational-quote"></p>
-            </div>
-        </div>
-    {% endif %}
-
     <!-- Footer -->
     <footer class="text-center text-muted py-5">
         <div class="container">
             <p class="mb-1">
                 <i class="fas fa-heart" style="color: var(--accent-secondary);"></i>
-                Your trusted Health Tracker
+                Your trusted and beloved Health Tracker
             </p>
             <p class="small">
-                Small habit, big impact!
+               Small impact, big impact!
             </p>
         </div>
     </footer>

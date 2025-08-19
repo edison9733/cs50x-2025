@@ -1,6 +1,3 @@
-# CS50x 2025 Health Tracker Helper Functions
-# This file contains utility functions used throughout the application
-
 import os
 import requests
 import urllib.parse
@@ -18,17 +15,25 @@ def apology(message, code=400):
 
         https://github.com/jacebrowning/memegen#special-characters
         """
-        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
-                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
+        for old, new in [
+            ("-", "--"),
+            (" ", "-"),
+            ("_", "__"),
+            ("?", "~q"),
+            ("%", "~p"),
+            ("#", "~h"),
+            ("/", "~s"),
+            ('"', "''")
+        ]:
             s = s.replace(old, new)
         return s
 
-    # Create apology message for meme
+    # create apology message for meme
     top_text = escape("Sorry")
     bottom_text = escape(message)
 
-    # Render the apology template with a fun meme
-    # Using different meme templates for variety
+    # render the apology template with a fun meme
+    # using different meme templates for variety
     meme_templates = [
         "bad-luck-brian",
         "y-u-no",
@@ -43,11 +48,7 @@ def apology(message, code=400):
     meme_index = code % len(meme_templates)
     meme = meme_templates[meme_index]
 
-    return render_template("apology.html",
-                         top=top_text,
-                         bottom=bottom_text,
-                         meme=meme,
-                         code=code), code
+    return render_template("apology.html", top=top_text, bottom=bottom_text, meme=meme, code=code), code
 
 
 def login_required(f):
@@ -56,11 +57,13 @@ def login_required(f):
 
     https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
+
     return decorated_function
 
 
@@ -70,11 +73,11 @@ def calculate_bmi(weight_kg, height_cm):
 
     Formula: BMI = weight (kg) / (height (m))^2
     """
-    if height_cm <= 0 or weight_kg <= 0:
+    if (height_cm <= 0 or weight_kg <= 0):
         return None
 
-    height_m = height_cm / 100.0
-    bmi = weight_kg / (height_m * height_m)
+    height_m = (height_cm / 100.0)
+    bmi =( weight_kg / (height_m * height_m))
     return round(bmi, 2)
 
 
@@ -82,13 +85,13 @@ def get_bmi_category(bmi):
     """
     Get BMI category based on WHO standards
     """
-    if bmi is None:
+    if (bmi is None):
         return "Unknown"
-    elif bmi < 18.5:
+    elif (bmi < 18.5):
         return "Underweight"
-    elif bmi < 25:
+    elif (bmi < 25):
         return "Normal weight"
-    elif bmi < 30:
+    elif (bmi < 30):
         return "Overweight"
     else:
         return "Obese"

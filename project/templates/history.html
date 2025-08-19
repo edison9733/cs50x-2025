@@ -1,4 +1,3 @@
-<!-- history.html - Historical data page -->
 {% extends "layout.html" %}
 
 {% block title %}
@@ -8,26 +7,28 @@
 {% block main %}
     <h1 class="mb-4">
         <i class="fas fa-chart-line"></i> Your Progress History
+
+        <div style ="background: #333;
+                     padding: 20px;
+                     margin: 20px 0;
+                     border-left: 4px solid #00ff88;">
+                     <p = style="color: white;
+                                 font-style: italic;
+                                 font-style: bold;
+                                 margin: 0;
+                                 "></p></div>
     </h1>
 
     <!-- Weight/BMI Chart -->
     <div class="card">
         <h3><i class="fas fa-weight"></i> Weight & BMI Trend</h3>
-        <canvas id="weight-chart"
-                data-weights="{{ weight_history|map(attribute='weight')|list|tojson }}"
-                data-bmi="{{ weight_history|map(attribute='bmi')|list|tojson }}"
-                data-dates="{{ weight_history|map(attribute='date')|list|tojson }}">
-        </canvas>
+        <canvas id="weight-chart"></canvas>
     </div>
 
     <!-- Calorie Chart -->
     <div class="card">
         <h3><i class="fas fa-fire"></i> Calorie History</h3>
-        <canvas id="calorie-chart"
-                data-consumed="{{ calorie_history|map(attribute='calories_consumed')|list|tojson }}"
-                data-burnt="{{ calorie_history|map(attribute='calories_burnt')|list|tojson }}"
-                data-dates="{{ calorie_history|map(attribute='date')|list|tojson }}">
-        </canvas>
+        <canvas id="calorie-chart"></canvas>
     </div>
 
     <!-- Data Tables -->
@@ -96,4 +97,152 @@
             </div>
         </div>
     </div>
+
+    <!-- Add inline script for charts , just copy from script.js -->
+    <script>
+        // Wait for page to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Weight Chart
+            const weightCanvas = document.getElementById('weight-chart');
+            if (weightCanvas) {
+                // Prepare data
+                const weightData = [
+                    {% for record in weight_history %}
+                        {{ record.weight }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                const bmiData = [
+                    {% for record in weight_history %}
+                        {{ record.bmi }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                const weightDates = [
+                    {% for record in weight_history %}
+                        '{{ record.date }}'{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                // Create chart
+                new Chart(weightCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: weightDates.reverse(),
+                        datasets: [{
+                            label: 'Weight (kg)',
+                            data: weightData.reverse(),
+                            borderColor: '#00ff88',
+                            backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        }, {
+                            label: 'BMI',
+                            data: bmiData.reverse(),
+                            borderColor: '#4ecdc4',
+                            backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#b0b0b0' }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                grid: { drawOnChartArea: false },
+                                ticks: { color: '#b0b0b0' }
+                            },
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#b0b0b0' }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: { color: '#ffffff' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Calorie Chart
+            const calorieCanvas = document.getElementById('calorie-chart');
+            if (calorieCanvas) {
+                // Prepare data
+                const consumedData = [
+                    {% for record in calorie_history %}
+                        {{ record.calories_consumed }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                const burntData = [
+                    {% for record in calorie_history %}
+                        {{ record.calories_burnt }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                const calorieDates = [
+                    {% for record in calorie_history %}
+                        '{{ record.date }}'{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                // Create chart
+                new Chart(calorieCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: calorieDates.reverse(),
+                        datasets: [{
+                            label: 'Calories Consumed',
+                            data: consumedData.reverse(),
+                            backgroundColor: '#ff6b6b',
+                        }, {
+                            label: 'Calories Burnt',
+                            data: burntData.reverse(),
+                            backgroundColor: '#00ff88',
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#b0b0b0' }
+                            },
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#b0b0b0' }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: { color: '#ffffff' }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        // Debug if the movitational quote dont exist
+        console.log('Quote element exists:', document.getElementById('motivational-quote'));
+
+        // Manual adding
+        const quoteEl = document.getElementById('motivational-quote');
+        if (quoteEl) {
+            console.log('Setting quote manually');
+            quoteEl.textContent = 'Test quote: Nothing in impossible!';
+        }
+    </script>
 {% endblock %}

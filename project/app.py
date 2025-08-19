@@ -1,26 +1,25 @@
 import os
-import re
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
+from helpers import apology, login_required
+import re
 import json
 
-from helpers import apology, login_required
-
-# Configure Flask application
+# Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded during development
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# Configure session to use filesystem instead of signed cookies
+# Configure session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
+# Configure database
 db = SQL("sqlite:///database.db")
 
 # Email validation regex pattern
@@ -29,7 +28,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 
 @app.after_request
 def after_request(response):
-    """Ensure responses aren't cached"""
+    """No caching"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
@@ -42,11 +41,13 @@ def index():
     """Show dashboard with daily summary"""
     # Get user's daily summary
     summary = db.execute(
-        "SELECT * FROM daily_summary WHERE user_id = ?",
+        """SELECT * FROM
+        daily_summary
+        WHERE user_id = ?""",
         session["user_id"]
     )
 
-    # Get today's food logs with details
+    # Get today's food logs
     food_logs = db.execute("""
         SELECT f.name, fl.quantity, f.calories, f.carbs, f.protein, f.fat, f.serving_size
         FROM food_log fl
@@ -72,16 +73,12 @@ def index():
         summary = [{"total_calories_consumed": 0, "total_calories_burnt": 0,
                    "current_weight": None, "current_bmi": None}]
 
-    return render_template("index.html",
-                         summary=summary[0],
-                         food_logs=food_logs,
-                         workout_logs=workout_logs,
-                         net_calories=net_calories)
+    return render_template("index.html", summary=summary[0], food_logs=food_logs, workout_logs=workout_logs, net_calories=net_calories)
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register new user"""
+    """Register user"""
     if request.method == "POST":
         # Validate username
         username = request.form.get("username")
@@ -130,35 +127,25 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-    # Forget any user_id
     session.clear()
-
     if request.method == "POST":
-        # Ensure username was submitted
         if not request.form.get("username"):
             return apology("must provide username", 403)
-
-        # Ensure password was submitted
         elif not request.form.get("password"):
             return apology("must provide password", 403)
 
-        # Query database for username
-        rows = db.execute(
-            "SELECT * FROM users WHERE username = ?",
-            request.form.get("username")
-        )
+        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("Invalid username and/or password", 403)
+            return apology("Invalid username / password", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
-        # Redirect user to home page
+        # Redirect user to dashboard
         flash("Welcome back!")
         return redirect("/")
-
     else:
         return render_template("login.html")
 
@@ -168,8 +155,6 @@ def logout():
     """Log user out"""
     # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
     return redirect("/")
 
 
@@ -178,11 +163,9 @@ def logout():
 def food():
     """Track food intake"""
     if request.method == "POST":
-        # Get form data
         food_id = request.form.get("food_id")
         quantity = request.form.get("quantity")
 
-        # Validate input
         if not food_id or not quantity:
             return apology("must select food and quantity", 400)
 
@@ -203,7 +186,6 @@ def food():
         return redirect("/")
 
     else:
-        # Get all available foods
         foods = db.execute("SELECT * FROM foods ORDER BY name")
         return render_template("food.html", foods=foods)
 
@@ -213,11 +195,9 @@ def food():
 def workout():
     """Track workout activities"""
     if request.method == "POST":
-        # Get form data
         workout_id = request.form.get("workout_id")
         duration = request.form.get("duration")
 
-        # Validate input
         if not workout_id or not duration:
             return apology("must select workout and duration", 400)
 
@@ -229,31 +209,23 @@ def workout():
             return apology("invalid duration", 400)
 
         # Calculate calories burnt
-        workout_data = db.execute(
-            "SELECT calories_per_minute FROM workouts WHERE id = ?",
-            workout_id
-        )
+        workout_data = db.execute( "SELECT calories_per_minute FROM workouts WHERE id = ?", workout_id)
         calories_burnt = workout_data[0]["calories_per_minute"] * duration
 
         # Insert workout log
         db.execute(
-            "INSERT INTO workout_log (user_id, workout_id, duration_minutes, calories_burnt) VALUES (?, ?, ?, ?)",
-            session["user_id"], workout_id, duration, calories_burnt
-        )
+            "INSERT INTO workout_log (user_id, workout_id, duration_minutes, calories_burnt) VALUES (?, ?, ?, ?)", session["user_id"], workout_id, duration, calories_burnt)
 
-        flash(f"Workout added! You burned {calories_burnt:.1f} calories!")
+        flash(f"Workout added! You have burned {calories_burnt:.1f} calories!")
         return redirect("/")
 
     else:
         # Get workouts by category
-        categories = ['abs', 'shoulder', 'legs', 'chest', 'cardio', 'other']
+        categories = ['abs', 'shoulder', 'legs', 'chest', 'cardio', 'others']
         workouts_by_category = {}
 
         for category in categories:
-            workouts_by_category[category] = db.execute(
-                "SELECT * FROM workouts WHERE category = ? ORDER BY name",
-                category
-            )
+            workouts_by_category[category] = db.execute("SELECT * FROM workouts WHERE category = ? ORDER BY name", category)
 
         return render_template("workout.html", workouts_by_category=workouts_by_category)
 
@@ -261,11 +233,9 @@ def workout():
 @app.route("/metrics", methods=["POST"])
 @login_required
 def metrics():
-    """Update body metrics"""
     weight = request.form.get("weight")
     height = request.form.get("height")
 
-    # Validate input
     try:
         weight = float(weight)
         height = float(height)
@@ -274,13 +244,9 @@ def metrics():
     except (ValueError, TypeError):
         return apology("invalid measurements", 400)
 
-    # Insert new metrics
-    db.execute(
-        "INSERT INTO body_metrics (user_id, weight, height) VALUES (?, ?, ?)",
-        session["user_id"], weight, height
-    )
+    db.execute("INSERT INTO body_metrics (user_id, weight, height) VALUES (?, ?, ?)", session["user_id"], weight, height)
 
-    flash("Body metrics updated!")
+    flash("Huuray, body metrics updated!")
     return redirect("/")
 
 
@@ -288,38 +254,50 @@ def metrics():
 @login_required
 def history():
     """Show historical data"""
-    # Get weight history
-    weight_history = db.execute("""
-        SELECT date, weight, bmi
-        FROM body_metrics
-        WHERE user_id = ?
+    weight_history = db.execute(
+        "SELECT date, weight, bmi FROM body_metrics WHERE user_id = ? ORDER BY date DESC LIMIT 30",
+        session["user_id"]
+    )
+
+    all_dates = db.execute("""
+        SELECT DISTINCT date FROM food_log WHERE user_id = ?
+        UNION
+        SELECT DISTINCT date FROM workout_log WHERE user_id = ?
         ORDER BY date DESC
         LIMIT 30
-    """, session["user_id"])
+    """, session["user_id"], session["user_id"])
 
-    # Get daily calorie history
-    calorie_history = db.execute("""
-        SELECT
-            date,
-            SUM(CASE WHEN fl.id IS NOT NULL THEN fl.quantity * f.calories / f.serving_size ELSE 0 END) as calories_consumed,
-            SUM(CASE WHEN wl.id IS NOT NULL THEN wl.calories_burnt ELSE 0 END) as calories_burnt
-        FROM (
-            SELECT DISTINCT date FROM food_log WHERE user_id = ?
-            UNION
-            SELECT DISTINCT date FROM workout_log WHERE user_id = ?
-        ) dates
-        LEFT JOIN food_log fl ON dates.date = fl.date AND fl.user_id = ?
-        LEFT JOIN foods f ON fl.food_id = f.id
-        LEFT JOIN workout_log wl ON dates.date = wl.date AND wl.user_id = ?
-        GROUP BY dates.date
-        ORDER BY dates.date DESC
-        LIMIT 30
-    """, session["user_id"], session["user_id"], session["user_id"], session["user_id"])
+    # Build calorie history for each date
+    calorie_history = []
+
+    for date_row in all_dates:
+        date = date_row["date"]
+
+        # Get food calories for this date
+        food_data = db.execute("""
+            SELECT SUM(fl.quantity * f.calories / f.serving_size) as total
+            FROM food_log fl
+            JOIN foods f ON fl.food_id = f.id
+            WHERE fl.user_id = ? AND fl.date = ?
+        """, session["user_id"], date)
+
+        # Get workout calories for this date
+        workout_data = db.execute("""
+            SELECT SUM(calories_burnt) as total
+            FROM workout_log
+            WHERE user_id = ? AND date = ?
+        """, session["user_id"], date)
+
+        # Add to history
+        calorie_history.append({
+            "date": date,
+            "calories_consumed": food_data[0]["total"] if food_data[0]["total"] else 0,
+            "calories_burnt": workout_data[0]["total"] if workout_data[0]["total"] else 0
+        })
 
     return render_template("history.html",
                          weight_history=weight_history,
                          calorie_history=calorie_history)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
